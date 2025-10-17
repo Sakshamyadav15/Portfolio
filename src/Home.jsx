@@ -15,6 +15,7 @@ import mediCirclImg from './assets/Medicircl.png';
 function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [selectedProject, setSelectedProject] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +49,7 @@ function Home() {
         top: offsetTop,
         behavior: "smooth",
       });
+      setMobileMenuOpen(false); // Close mobile menu after navigation
     }
   };
 
@@ -166,7 +168,19 @@ function Home() {
               <span className="header-name">Saksham Yadav</span>
             </button>
 
-            <nav className="nav-menu">
+            <button 
+              className="mobile-menu-toggle"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <span className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+
+            <nav className={`nav-menu ${mobileMenuOpen ? 'mobile-open' : ''}`}>
               <button
                 onClick={() => scrollToSection("home")}
                 className={`nav-link ${activeSection === "home" ? "active" : ""}`}
@@ -662,7 +676,6 @@ function Home() {
                   <li>Computer Networks</li>
                   <li>Problem Solving</li>
                   <li>Software Engineering</li>
-                  <li>IoT</li>
                   <li>Database Systems</li>
                 </ul>
               </div>
@@ -699,6 +712,8 @@ function Home() {
                 working with React, Flutter, FastAPI, and AI frameworks like LangChain and Hugging Face. 
                 I've built projects ranging from mental wellness assistants to RAG-based support systems.
               </p>
+              
+              <h3 className="achievements-section-title">Achievements</h3>
               
               <div className="achievements-grid">
                 <div className="achievement-card">
@@ -909,7 +924,7 @@ function Home() {
               </div>
             </div>
           </div>
-          <p className="footer-copyright">© 2025 Saksham Yadav. Built with React & Vite</p>
+          <p className="footer-copyright">© 2025 Saksham Yadav. Myself Since 2006</p>
         </div>
       </footer>
     </div>

@@ -19,7 +19,7 @@ function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["home", "experience", "projects", "skills", "about-me", "contacts"];
+      const sections = ["home", "experience", "projects", "skills", "about-me", "education", "contacts"];
       const scrollPosition = window.scrollY + 100;
 
       for (const sectionId of sections) {
@@ -40,6 +40,19 @@ function Home() {
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Prevent body scroll when mobile menu or modal is open
+  useEffect(() => {
+    if (mobileMenuOpen || selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen, selectedProject]);
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -512,69 +525,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Project Modal */}
-      {selectedProject && (
-        <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedProject(null)}>×</button>
-            
-            <h2 className="modal-title">{projectDetails[selectedProject].title}</h2>
-            
-            <p className="modal-description">{projectDetails[selectedProject].fullDescription}</p>
-            
-            <div className="modal-section">
-              <h3 className="modal-section-title">Key Features</h3>
-              <ul className="modal-features-list">
-                {projectDetails[selectedProject].features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="modal-section">
-              <h3 className="modal-section-title">Tech Stack</h3>
-              <div className="modal-tech-stack">
-                {projectDetails[selectedProject].techStack.map((tech, index) => (
-                  <span key={index} className="modal-tag">{tech}</span>
-                ))}
-              </div>
-            </div>
-            
-            {projectDetails[selectedProject].metrics && (
-              <div className="modal-section">
-                <h3 className="modal-section-title">Performance Metrics</h3>
-                <p className="modal-metrics">{projectDetails[selectedProject].metrics}</p>
-              </div>
-            )}
-            
-            {projectDetails[selectedProject].architecture && (
-              <div className="modal-section">
-                <h3 className="modal-section-title">Architecture</h3>
-                <p className="modal-architecture">{projectDetails[selectedProject].architecture}</p>
-              </div>
-            )}
-            
-            <div className="modal-buttons">
-              {projectDetails[selectedProject].github && (
-                <a href={projectDetails[selectedProject].github} target="_blank" rel="noopener noreferrer" className="btn-primary">
-                  View on GitHub
-                </a>
-              )}
-              {projectDetails[selectedProject].download && (
-                <a href={projectDetails[selectedProject].download} target="_blank" rel="noopener noreferrer" className="btn-secondary" download>
-                  Download APK
-                </a>
-              )}
-              {projectDetails[selectedProject].liveDemo && (
-                <a href={projectDetails[selectedProject].liveDemo} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-                  Live Demo
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
       <section className="skills-section" id="skills">
         <div className="content-wrapper">
           <div className="section-header">
@@ -765,6 +715,63 @@ function Home() {
         </div>
       </section>
 
+      {/* Education Section */}
+      <section id="education" className="education-section">
+        <div className="content-wrapper">
+          <div className="section-header">
+            <div className="section-title-wrapper">
+              <h2 className="section-title">
+                <span className="title-hash">#</span>
+                <span className="title-text">education</span>
+              </h2>
+              <div className="title-line"></div>
+            </div>
+          </div>
+
+          <div className="education-timeline">
+            <div className="education-card">
+              <div className="education-header">
+                <div className="education-icon"></div>
+                <div className="education-title-group">
+                  <h3 className="education-degree">B.E. – Computer Science & Engineering</h3>
+                  <p className="education-institution">MS Ramaiah Institute of Technology</p>
+                </div>
+              </div>
+              <div className="education-details">
+                <div className="education-meta">
+                  <span className="education-date">Oct 2023 – Oct 2027</span>
+                  <span className="education-location">Bengaluru, India</span>
+                </div>
+                <div className="education-achievement">
+                  <span className="achievement-label">GPA:</span>
+                  <span className="achievement-value">9.27 / 10</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="education-card">
+              <div className="education-header">
+                <div className="education-icon"></div>
+                <div className="education-title-group">
+                  <h3 className="education-degree">12th PCMCS - CBSE</h3>
+                  <p className="education-institution">St. Teresa School</p>
+                </div>
+              </div>
+              <div className="education-details">
+                <div className="education-meta">
+                  <span className="education-date">Mar 2023</span>
+                  <span className="education-location">Ghaziabad, India</span>
+                </div>
+                <div className="education-achievement">
+                  <span className="achievement-label">Percentage:</span>
+                  <span className="achievement-value">97.6%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="contact-section" id="contacts">
         <div className="content-wrapper">
           <div className="section-header">
@@ -939,6 +946,75 @@ function Home() {
       </footer>
       </div>
       {/* End portfolio-main wrapper */}
+
+      {/* Project Modal */}
+      {selectedProject && (
+        <div 
+          className="modal-overlay" 
+          onClick={() => setSelectedProject(null)}
+        >
+          <div 
+            className="modal-content" 
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="modal-close" onClick={() => setSelectedProject(null)}>×</button>
+            
+            <h2 className="modal-title">{projectDetails[selectedProject].title}</h2>
+            
+            <p className="modal-description">{projectDetails[selectedProject].fullDescription}</p>
+            
+            <div className="modal-section">
+              <h3 className="modal-section-title">Key Features</h3>
+              <ul className="modal-features-list">
+                {projectDetails[selectedProject].features.map((feature, index) => (
+                  <li key={index}>{feature}</li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="modal-section">
+              <h3 className="modal-section-title">Tech Stack</h3>
+              <div className="modal-tech-stack">
+                {projectDetails[selectedProject].techStack.map((tech, index) => (
+                  <span key={index} className="modal-tag">{tech}</span>
+                ))}
+              </div>
+            </div>
+            
+            {projectDetails[selectedProject].metrics && (
+              <div className="modal-section">
+                <h3 className="modal-section-title">Impact & Metrics</h3>
+                <p className="modal-metrics">{projectDetails[selectedProject].metrics}</p>
+              </div>
+            )}
+            
+            {projectDetails[selectedProject].architecture && (
+              <div className="modal-section">
+                <h3 className="modal-section-title">Architecture</h3>
+                <p className="modal-architecture">{projectDetails[selectedProject].architecture}</p>
+              </div>
+            )}
+            
+            <div className="modal-buttons">
+              {projectDetails[selectedProject].github && (
+                <a href={projectDetails[selectedProject].github} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                  View on GitHub
+                </a>
+              )}
+              {projectDetails[selectedProject].download && (
+                <a href={projectDetails[selectedProject].download} target="_blank" rel="noopener noreferrer" className="btn-secondary" download>
+                  Download APK
+                </a>
+              )}
+              {projectDetails[selectedProject].liveDemo && (
+                <a href={projectDetails[selectedProject].liveDemo} target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                  Live Demo
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

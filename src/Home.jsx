@@ -180,6 +180,14 @@ function Home() {
               </span>
             </button>
 
+            {/* Mobile menu backdrop overlay */}
+            {mobileMenuOpen && (
+              <div 
+                className="mobile-menu-backdrop"
+                onClick={() => setMobileMenuOpen(false)}
+              />
+            )}
+
             <nav className={`nav-menu ${mobileMenuOpen ? 'mobile-open' : ''}`}>
               <button
                 onClick={() => scrollToSection("home")}

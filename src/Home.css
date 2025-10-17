@@ -1553,6 +1553,11 @@ body {
   transform: rotate(-45deg) translate(6px, -6px);
 }
 
+/* Mobile Menu Backdrop */
+.mobile-menu-backdrop {
+  display: none;
+}
+
 .nav-link {
   background: transparent;
   border: none;
@@ -1934,6 +1939,30 @@ body {
   /* Show hamburger menu on mobile */
   .mobile-menu-toggle {
     display: block;
+  }
+
+  /* Mobile menu backdrop */
+  .mobile-menu-backdrop {
+    display: block;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   /* Mobile menu styles */

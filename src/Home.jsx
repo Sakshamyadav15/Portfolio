@@ -269,7 +269,9 @@ function Home() {
         <div className="border-box border-box-3" />
       </div>
 
-      <section className="hero-section" id="home">
+      {/* Main Content Wrapper - will blur when menu is open */}
+      <div className={`portfolio-main ${mobileMenuOpen ? 'blur-active' : ''}`}>
+        <section className="hero-section" id="home">
         <div className="content-wrapper">
           <div className="hero-grid">
             <div className="hero-content">
@@ -935,6 +937,8 @@ function Home() {
           <p className="footer-copyright">© 2025 Saksham Yadav. Myself Since 2006</p>
         </div>
       </footer>
+      </div>
+      {/* End portfolio-main wrapper */}
     </div>
   );
 }

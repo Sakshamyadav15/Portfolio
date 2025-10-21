@@ -247,7 +247,7 @@ function Home() {
               <div className="nav-divider" />
 
               <a 
-                href="https://www.linkedin.com/in/saksham-yadav-002569217/" 
+                href="https://www.linkedin.com/in/saksham-yadav-7aa241293/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="nav-social-link"
